@@ -172,9 +172,9 @@ app.put("/movies/:id", async function (request, response) {
 //   response.send(movies);
 // });
 
-app.get("/movies", function (request,response) {
-  const data = request.body;
-  response.send(data);
+app.get("/movies",async function (request,response) {
+  const movies = await client.db("b42wd").collection("movies").find({}).toArray();
+  response.send(movies);
 });
 
 //express.json => middleware
