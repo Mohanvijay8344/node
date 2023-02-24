@@ -124,7 +124,8 @@ const client = new MongoClient(MONGO_URL); // dial
 await client.connect(); // call
 console.log("Mongo is connected !!!");
 // console.log(MONGO_URL);
-const PORT = 4000;
+
+const PORT = process.env.PORT;
 
 app.use(express.json());
 
