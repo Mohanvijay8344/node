@@ -1,16 +1,18 @@
 import express from "express";
 
 import { client } from "../index.js";
+import {
+  getMovies,
+  deleteMovies,
+  updateMovies,
+  getAllMovies,
+} from "../service/movies.service.js";
 
 const router = express.Router();
 
-
 router.get("/:id", async function (request, response) {
   const { id } = request.params;
-  const movie = await client
-    .db("b42wd")
-    .collection("movies")
-    .findOne({ id: id });
+  const movie = await getMovies(id);
   console.log(movie);
   movie
     ? response.send(movie)
@@ -19,10 +21,7 @@ router.get("/:id", async function (request, response) {
 
 router.delete("/:id", async function (request, response) {
   const { id } = request.params;
-  const result = await client
-    .db("b42wd")
-    .collection("movies")
-    .deleteOne({ id: id });
+  const result = await deleteMovies(id);
   result.deletedCount >= 1
     ? response.send({ message: "Movie Deleed Successfully" })
     : response.status(404).send({ message: "Movie Not Found" });
@@ -31,21 +30,13 @@ router.delete("/:id", async function (request, response) {
 router.put("/:id", async function (request, response) {
   const { id } = request.params;
   const data = request.body;
-  const result = await client
-    .db("b42wd")
-    .collection("movies")
-    .updateOne({ id: id }, { $set: data });
+  const result = await updateMovies(id, data);
   response.send(result);
 });
 
 router.get("/", async function (request, response) {
-  const movies = await client
-    .db("b42wd")
-    .collection("movies")
-    .find({})
-    .toArray();
+  const movies = await getAllMovies();
   response.send(movies);
-  console.log(movies)
 });
 
 //express.json => middleware
