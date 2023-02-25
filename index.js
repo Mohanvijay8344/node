@@ -3,7 +3,8 @@ dotenv.config();
 import express from "express"; // "type": "module"
 import { MongoClient } from "mongodb";
 const app = express();
-import moviesRouter from "./router/movies.router.js"
+import moviesRouter from "./router/movies.router.js";
+import cors from "cors";
 
 // const movies = [
 //   {
@@ -130,6 +131,7 @@ console.log("Mongo is connected !!!");
 
 const PORT = process.env.PORT;
 
+app.use(cors());
 app.use(express.json());
 app.use("/movies", moviesRouter);
 //cursor pagination (20) => cursor Array => toArray()
