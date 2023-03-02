@@ -1,4 +1,5 @@
-import express from "express";
+import express, { query } from "express";
+import { auth } from "../middleware/auth.js"
 
 import { client } from "../index.js";
 import {
@@ -35,8 +36,14 @@ router.put("/:id", async function (request, response) {
 });
 
 router.get("/", async function (request, response) {
-  const movies = await getAllMovies();
+  if(request.query.rating) {
+    request.query.rating = +request.query.rating;
+  }
+
+  const movies = await getAllMovies(request.query);
+
   response.send(movies);
+  console.log(request.query)
 });
 
 //express.json => middleware
