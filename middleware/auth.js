@@ -9,7 +9,7 @@ try{
     jwt.verify(token, process.env.SECRET_KEY);
     next();
 } catch(err){
-    response.status(401).json({message: "Invalid token"});
+    response.status(400).json({message: "jwt must be provided"});
 }
     
 }
