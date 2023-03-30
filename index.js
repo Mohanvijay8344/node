@@ -137,7 +137,7 @@ app.use("/movies", moviesRouter);
 //cursor pagination (20) => cursor Array => toArray()
 
 app.get("/", function (request, response) {
-  response.send(movies);
+  response.send("Hi Admin Welcome!!!");
 });
 
 
