@@ -24,7 +24,7 @@ router.delete("/:id", async function (request, response) {
   const { id } = request.params;
   const result = await deleteMovies(id);
   result.deletedCount >= 1
-    ? response.send({ message: "Movie Deleed Successfully" })
+    ? response.send({ message: "Movie Deleted Successfully" })
     : response.status(404).send({ message: "Movie Not Found" });
 });
 
@@ -39,6 +39,14 @@ router.get("/", async function (request, response) {
   if(request.query.rating) {
     request.query.rating = +request.query.rating;
   }
+
+  router.get("/movies", async function (request, response) {
+    const movie = await getMovies(id);
+    console.log(movie);
+    movie
+      ? response.send(movie)
+      : response.status(404).send({ message: "Movie Not Found" });
+  });
 
   const movies = await getAllMovies(request.query);
 

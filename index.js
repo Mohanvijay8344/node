@@ -133,7 +133,7 @@ await client.connect(); // call
 console.log("Mongo is connected !!!");
 // console.log(MONGO_URL);
 
-const PORT = process.env.PORT;
+const PORT = 3005;
 
 //middleware
 app.use(cors());
@@ -169,27 +169,31 @@ app.get("/", function (request, response) {
 //   },
 // ];
 
-app.get("/", function (request, response) {
-  response.send("Welcom to Mobiles Showroom 💕💕💖📳📱");
-});
+// app.get("/", function (request, response) {
+//   response.send("Welcom to Mobiles Showroom 💕💕💖📳📱");
+// });
 
-app.post("/mobiles", async function (request, response) {
-  const data = request.body;
-  const result = await client
-    .db("b42wd")
-    .collection("mobiles")
-    .insertMany(data);
-  response.send(result);
-});
-app.get("/mobiles/all", auth, async function (request, response) {
-  const mobiles = await client
-    .db("b42wd")
-    .collection("mobiles")
-    .find({})
-    .toArray()
-  response.send(mobiles);
-});
+// app.post("/mobiles", async function (request, response) {
+//   const data = request.body;
+//   const result = await client
+//     .db("b42wd")
+//     .collection("mobiles")
+//     .insertMany(data);
+//   response.send(result);
+// });
+// app.get("/mobiles/all", auth, async function (request, response) {
+//   const mobiles = await client
+//     .db("b42wd")
+//     .collection("mobiles")
+//     .find({})
+//     .toArray()
+//   response.send(mobiles);
+// });
 
-app.listen(PORT, () => console.log(`The server started in: ${PORT} ✨✨`));
+// app.listen(PORT, () => console.log(`The server started in: ${PORT} ✨✨`));
+
+app.listen(PORT, function() {
+  console.log('listening on 3005')
+});
 
 //ENV - environment variabes

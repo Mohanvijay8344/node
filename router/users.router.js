@@ -20,9 +20,9 @@ router.post("/signup", async function (request, response) {
   console.log(userFromDb)
 
   if (userFromDb) {
-    return response.status(400).send({ message: "User already exists" });
-  } else if (!userFromDb) {
-    return response
+    response.status(400).send({ message: "User already exists" });
+  } else if (password.length < 8) {
+   response
       .status(400)
       .send({ message: "password must be at least 8 characters" });
   } else {
@@ -46,14 +46,15 @@ router.post("/login", async function (request, response) {
   } else {
     const storedDbPassword = userFromDb.password;
     const isPasswordCheck = await bcrypt.compare(password, storedDbPassword);
-    // console.log(isPasswordCheck);
+    console.log(isPasswordCheck);
 
     if (isPasswordCheck) {
-      const token = jwt.sign({id: userFromDb._id}, process.env.SECRET_KEY)
-      return response.send({ message: "login successful", token : token});
-  } else {
-    return response.status(400).send({ message: "Invalid" });
-  }
+      const token = jwt.sign({id: userFromDb._id}, process.env.SECURITY_KEY)
+      response.send({message: "Successfull Login", token: token})
+      // console.log(token)
+    }else{
+      response.status(404).send({message: "Invalid"})
+    }
   }
 });
 
